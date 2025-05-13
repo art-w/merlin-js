@@ -50,7 +50,9 @@ let add_dynamic_cmis dcs =
       | None -> ()) dcs.dcs_toplevel_modules;
 
     let new_load ~allow_hidden ~unit_name =
-      let filename = filename_of_module unit_name in
+      let filename =
+        let unit_name = Ocaml_typing.Compilation_unit.Name.to_string unit_name in
+        filename_of_module unit_name in
       let fs_name = Filename.(concat stdlib_path filename) in
       (* Check if it's already been downloaded. This will be the
          case for all toplevel cmis. Also check whether we're supposed
